@@ -7,11 +7,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-
-  <ItemGroup>
-    <None Include="GlobalUsings.cs" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="PuppeteerSharp" Version="18.0.0" />
   </ItemGroup>
