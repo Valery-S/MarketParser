@@ -2,8 +2,8 @@
 {
     internal static class NamesOfSortingTypes
     {
-        public static string PriceUp = "По возрастанию цены";
-        public static string PriceDown = "По убыванию цены";
-        public static string Rating = "По рейтингу";
+        public const string PriceUp = "По возрастанию цены";
+        public const string PriceDown = "По убыванию цены";
+        public const string Rating = "По рейтингу";
     }
 }

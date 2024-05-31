@@ -41,10 +41,10 @@ namespace MarketParser
             SaveHtmlToFile(content);
 
             // Запрос на нахождение цен товаров
-            var jsSelectAllPrices = "Array.from(document.querySelectorAll(\".e1j9birj0\")).map(a => a.innerText);";
+            var jsSelectAllPrices = $"Array.from(document.querySelectorAll(\"{site.PriceSelector}\")).map(a => a.innerText);";
 
             // Запрос на нахождение описаний товаров
-            var jsSelectAllDescriptions = "Array.from(document.querySelectorAll(\".app-catalog-9gnskf\")).map(a => a.innerText);";
+            var jsSelectAllDescriptions = $"Array.from(document.querySelectorAll(\"{site.DescriptionSelector}\")).map(a => a.innerText);";
 
             // Поиск содержимого по запросу
             var prices = page?.EvaluateExpressionAsync<string[]>(jsSelectAllPrices).ConfigureAwait(false).GetAwaiter().GetResult();

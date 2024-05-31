@@ -2,8 +2,8 @@
 {
     internal static class NamesOfSites
     {
-        public static string Citilink = "Ситилинк";
-        public static string Wildberries = "Вайлдберис";
+        public const string Citilink = "Ситилинк";
+        public const string Wildberries = "Вайлдберис";
 
     }
 }
