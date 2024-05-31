@@ -18,8 +18,9 @@ namespace MarketParser
             List<Product> _product= new List<Product> ();
 
             //Получение товаров с сайта "Ситилинк" по запросу "Телефон", товары отсортированы по цене
-            _product = _parser.GetProducts(_sd.DictionaryofSites[NamesOfSites.Wildberries], "телефон", NamesOfSortingTypes.PriceDown);
+            _product = _parser.GetProducts(_sd.DictionaryofSites[NamesOfSites.YandexMarket], "телефон", NamesOfSortingTypes.PriceDown);
 
+            Console.WriteLine(_product.Count);
             //Вывод данных о товарах в терминал
             foreach (Product p in _product)
             {

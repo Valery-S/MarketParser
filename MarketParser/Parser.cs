@@ -14,6 +14,7 @@ namespace MarketParser
         public Parser()
         {
             var options = new EdgeOptions();
+            options.PageLoadStrategy = PageLoadStrategy.Normal;
             driver = new EdgeDriver(options);
         }
 
@@ -28,8 +29,8 @@ namespace MarketParser
         {
             var products = new List<Product>();
 
-            driver.Url = $"{site.SearchUrl}{product_name}{site.SortingBy[sorting_type]}";
-            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(ExpectedConditions.ElementExists((By.CssSelector(site.PriceSelector))));
+            driver.Navigate().GoToUrl($"{site.SearchUrl}{product_name}{site.SortingBy[sorting_type]}");
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(ExpectedConditions.ElementExists(By.CssSelector(site.PriceSelector)));
 
             SaveHtmlToFile(driver.PageSource);
 
@@ -42,7 +43,7 @@ namespace MarketParser
             for (int i = 0; i < prices?.Count; i++)
             {
                 Product product = new Product();
-                product.Price = Int32.Parse(prices[i].Text.Replace(" ","").Replace("₽",""));
+                product.Price = Int32.Parse(prices[i].Text.Replace(" ", "").Replace(" ", "").Replace("₽",""));
                 product.Description = descriptions[i].Text;
                 products.Add(product);
             }
