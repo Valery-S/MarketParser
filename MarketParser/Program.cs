@@ -5,7 +5,7 @@ namespace MarketParser
 {
     internal class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             //Создание и заполнение словаря сайтов
             SitesDictionary _sd=new SitesDictionary();
@@ -13,13 +13,12 @@ namespace MarketParser
 
             //Создание и запуск парсера
             Parser _parser = new Parser();
-            await _parser.StartBrowser();
 
             //Создание списка товаров
             List<Product> _product= new List<Product> ();
 
             //Получение товаров с сайта "Ситилинк" по запросу "Телефон", товары отсортированы по цене
-            _product = _parser.GetProducts(_sd.DictionaryofSites[NamesOfSites.Citilink], "телефон", NamesOfSortingTypes.PriceDown);
+            _product = _parser.GetProducts(_sd.DictionaryofSites[NamesOfSites.Wildberries], "телефон", NamesOfSortingTypes.PriceDown);
 
             //Вывод данных о товарах в терминал
             foreach (Product p in _product)
@@ -29,7 +28,7 @@ namespace MarketParser
             }
 
             //Завершение работы парсера
-            await _parser.CloseBrowser();
+             _parser.CloseBrowser();
 
         }
     }

@@ -1,31 +1,26 @@
 ﻿using MarketParser.Models;
-using MarketParser.Sites;
-using PuppeteerSharp;
+
+using OpenQA.Selenium;
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace MarketParser
 {
     internal class Parser
     {
-        private static BrowserFetcher? browserFetcher = null;
-        private static IBrowser? browser = null;
+        private static EdgeDriver driver;
 
-        public Parser() {}
-
-        //Открытие браузера
-        public async Task StartBrowser() 
+        public Parser()
         {
-            browserFetcher ??= new BrowserFetcher();
-            await browserFetcher.DownloadAsync();
-            browser = await Puppeteer.LaunchAsync(new LaunchOptions
-            {
-                Headless = true
-            });
+            var options = new EdgeOptions();
+            driver = new EdgeDriver(options);
         }
 
         //Закрытие браузера
-        public async Task CloseBrowser()
+        public void CloseBrowser()
         {
-            await browser?.CloseAsync();
+            driver.Quit();
         }
 
         //Получение списка товаров
@@ -33,30 +28,22 @@ namespace MarketParser
         {
             var products = new List<Product>();
 
-            var page = browser?.NewPageAsync().Result;
-            page?.GoToAsync($"{site.SearchUrl}{product_name}{site.SortingBy[sorting_type]}").ConfigureAwait(false).GetAwaiter().GetResult();
+            driver.Url = $"{site.SearchUrl}{product_name}{site.SortingBy[sorting_type]}";
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(ExpectedConditions.ElementExists((By.CssSelector(site.PriceSelector))));
 
-            // Получение содержимого страницы
-            var content = page?.GetContentAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-            SaveHtmlToFile(content);
-
-            // Запрос на нахождение цен товаров
-            var jsSelectAllPrices = $"Array.from(document.querySelectorAll(\"{site.PriceSelector}\")).map(a => a.innerText);";
-
-            // Запрос на нахождение описаний товаров
-            var jsSelectAllDescriptions = $"Array.from(document.querySelectorAll(\"{site.DescriptionSelector}\")).map(a => a.innerText);";
+            SaveHtmlToFile(driver.PageSource);
 
             // Поиск содержимого по запросу
-            var prices = page?.EvaluateExpressionAsync<string[]>(jsSelectAllPrices).ConfigureAwait(false).GetAwaiter().GetResult();
+            var prices = driver.FindElements(By.CssSelector(site.PriceSelector));
 
             // Поиск содержимого по запросу
-            var descriptions = page?.EvaluateExpressionAsync<string[]>(jsSelectAllDescriptions).ConfigureAwait(false).GetAwaiter().GetResult();
+            var descriptions = driver.FindElements(By.CssSelector(site.DescriptionSelector));
 
-            for (int i = 0; i < prices?.Length; i++)
+            for (int i = 0; i < prices?.Count; i++)
             {
                 Product product = new Product();
-                product.Price = Int32.Parse(prices[i].Replace(" ",""));
-                product.Description = descriptions[i];
+                product.Price = Int32.Parse(prices[i].Text.Replace(" ","").Replace("₽",""));
+                product.Description = descriptions[i].Text;
                 products.Add(product);
             }
 
