@@ -1,6 +1,6 @@
 ﻿namespace MarketParser.Models
 {
-    internal class Product
+    public class Product
     {
         //Название товара
         public string? Description { get; set; } = "";

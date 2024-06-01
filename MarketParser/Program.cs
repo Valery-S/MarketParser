@@ -27,10 +27,6 @@ namespace MarketParser
                 Console.WriteLine(p.Description);
                 Console.WriteLine(p.Price + "\n");
             }
-
-            //Завершение работы парсера
-             _parser.CloseBrowser();
-
         }
     }
 }

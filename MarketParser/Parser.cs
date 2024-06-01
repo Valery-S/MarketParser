@@ -7,7 +7,7 @@ using SeleniumExtras.WaitHelpers;
 
 namespace MarketParser
 {
-    internal class Parser
+    public class Parser
     {
         private static EdgeDriver driver;
 
@@ -29,7 +29,7 @@ namespace MarketParser
         {
             var products = new List<Product>();
 
-            driver.Navigate().GoToUrl($"{site.SearchUrl}{product_name}{site.SortingBy[sorting_type]}");
+            driver.Url=$"{site.SearchUrl}{product_name}{site.SortingBy[sorting_type]}";
             new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(ExpectedConditions.ElementExists(By.CssSelector(site.PriceSelector)));
 
             SaveHtmlToFile(driver.PageSource);
@@ -47,6 +47,9 @@ namespace MarketParser
                 product.Description = descriptions[i].Text;
                 products.Add(product);
             }
+
+            //Завершение работы парсера
+            CloseBrowser();
 
             return products;
         }

@@ -1,6 +1,6 @@
 ﻿namespace MarketParser.Models
 {
-    internal class Site
+    public class Site
     {
         //Название сайта
         public string Name { get; set; } = "";

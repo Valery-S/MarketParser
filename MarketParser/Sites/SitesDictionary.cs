@@ -2,7 +2,7 @@
 
 namespace MarketParser.Sites
 {
-    internal class SitesDictionary
+    public class SitesDictionary
     {
         public Dictionary<string,Site> DictionaryofSites { get; set; }
 
