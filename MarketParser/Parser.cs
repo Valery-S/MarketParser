@@ -30,22 +30,32 @@ namespace MarketParser
             var products = new List<Product>();
 
             driver.Url=$"{site.SearchUrl}{product_name}{site.SortingBy[sorting_type]}";
-            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(ExpectedConditions.ElementExists(By.CssSelector(site.PriceSelector)));
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(ExpectedConditions.ElementExists(By.CssSelector(site.URLSelector)));
 
             SaveHtmlToFile(driver.PageSource);
 
             // Поиск содержимого по запросу
             var prices = driver.FindElements(By.CssSelector(site.PriceSelector));
-
-            // Поиск содержимого по запросу
             var descriptions = driver.FindElements(By.CssSelector(site.DescriptionSelector));
+            var images = driver.FindElements(By.CssSelector(site.ImageSelector));
+            var URLs = driver.FindElements(By.CssSelector(site.URLSelector)); 
 
-            for (int i = 0; i < prices?.Count; i++)
+            for (int i = 0; i < images?.Count;i++)
             {
                 Product product = new Product();
-                product.Price = Int32.Parse(prices[i].Text.Replace(" ", "").Replace(" ", "").Replace("₽",""));
-                product.Description = descriptions[i].Text;
-                products.Add(product);
+                try
+                {
+                    product.Price = Int32.Parse(prices[i].Text.Replace(" ", "").Replace(" ", "").Replace("₽", ""));
+                    product.Description = descriptions[i].Text;
+                    product.Image_url = images[i].GetAttribute("src");
+                    product.URL = URLs[i].GetAttribute("href");
+                    products.Add(product);
+                }
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine($"Processing failed: {e.Message}");
+                }
+
             }
 
             //Завершение работы парсера

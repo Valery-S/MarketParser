@@ -14,7 +14,8 @@
         //Селекторы для поиска по html коду
         public string PriceSelector { get; set; } = "";
         public string DescriptionSelector { get; set; } = "";
-
+        public string ImageSelector { get; set; } = "";
+        public string URLSelector { get; set; } = "";
 
         public Site()
         {

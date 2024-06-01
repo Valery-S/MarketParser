@@ -3,14 +3,15 @@
     public class Product
     {
         //Название товара
-        public string? Description { get; set; } = "";
+        public string Description { get; set; } = "";
         //Цена товара
         public int Price { get; set; }
         //Рейтинг по количеству оценок
         public double Rating { get; set; }
         //Ссылка на изображение
-        public string? Image_url { get; set; } = "";
-
+        public string Image_url { get; set; } = "";
+        //Ссылка на товар
+        public string URL { get; set; }
         public Product(){} 
     }
 }

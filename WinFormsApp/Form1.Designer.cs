@@ -34,7 +34,7 @@
             ProductDataGridView = new DataGridView();
             DescriptionColumn = new DataGridViewTextBoxColumn();
             PriceColumn = new DataGridViewTextBoxColumn();
-            ImageColumn = new DataGridViewTextBoxColumn();
+            URLColumn = new DataGridViewTextBoxColumn();
             pictureBox1 = new PictureBox();
             CitilinkCheckBox = new CheckBox();
             WbCheckBox = new CheckBox();
@@ -75,7 +75,7 @@
             // ProductDataGridView
             // 
             ProductDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            ProductDataGridView.Columns.AddRange(new DataGridViewColumn[] { DescriptionColumn, PriceColumn, ImageColumn });
+            ProductDataGridView.Columns.AddRange(new DataGridViewColumn[] { DescriptionColumn, PriceColumn, URLColumn });
             ProductDataGridView.Location = new Point(286, 91);
             ProductDataGridView.Name = "ProductDataGridView";
             ProductDataGridView.RowTemplate.Height = 25;
@@ -94,11 +94,11 @@
             PriceColumn.Name = "PriceColumn";
             PriceColumn.Width = 120;
             // 
-            // ImageColumn
+            // URLColumn
             // 
-            ImageColumn.HeaderText = "Картинка";
-            ImageColumn.Name = "ImageColumn";
-            ImageColumn.Width = 300;
+            URLColumn.HeaderText = "URL";
+            URLColumn.Name = "URLColumn";
+            URLColumn.Width = 300;
             // 
             // pictureBox1
             // 
@@ -159,7 +159,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Cyan;
-            ClientSize = new Size(1098, 474);
+            ClientSize = new Size(1134, 474);
             Controls.Add(YandexCheckBox);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
@@ -188,11 +188,11 @@
         private CheckBox CitilinkCheckBox;
         private CheckBox checkBox1;
         private CheckBox WbCheckBox;
-        private DataGridViewTextBoxColumn DescriptionColumn;
-        private DataGridViewTextBoxColumn PriceColumn;
-        private DataGridViewTextBoxColumn ImageColumn;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
         private CheckBox YandexCheckBox;
+        private DataGridViewTextBoxColumn DescriptionColumn;
+        private DataGridViewTextBoxColumn PriceColumn;
+        private DataGridViewTextBoxColumn URLColumn;
     }
 }
