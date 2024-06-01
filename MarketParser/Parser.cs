@@ -9,7 +9,7 @@ namespace MarketParser
 {
     public class Parser
     {
-        private static EdgeDriver driver;
+        private EdgeDriver driver;
 
         public Parser()
         {
